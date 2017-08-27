@@ -6,12 +6,14 @@
   </head>
   <body>
     <div id="query-box">
-      <div class="box-name">Query</div>
-      <textarea id="query"></textarea>
+      <div class="box-name">Query
+        <input id="copy" type="button" value="copy">
+      </div>
+      <textarea id="query" spellcheck="false"></textarea>
     </div>
     <div id="results-box">
       <div class="box-name">Results (<span id="node-count"></span>)</div>
-      <textarea id="results" readonly="readonly"></textarea>
+      <textarea id="results" readonly="readonly" spellcheck="false"></textarea>
     </div>
     <script type="text/javascript" src="bar.js"></script>
   </body>

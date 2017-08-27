@@ -45,7 +45,7 @@ var handleRequest = function(request, sender, cb) {
   // Note: Setting textarea's value and text node's nodeValue is XSS-safe.
   if (request.type === 'update') {
     if (request.query !== null) {
-      queryEl.value = request.query;
+      queryEl.value = request.css;
     }
     if (request.results !== null) {
       resultsEl.value = request.results[0];
@@ -84,5 +84,11 @@ document.addEventListener('mousemove', handleMouseMove);
 // Add keydown listener so we can detect Ctrl-Shift-X and tell the content
 // script to hide iframe and steal focus.
 document.addEventListener('keydown', handleKeyDown);
+
+document.addEventListener('click', function(){
+  var query = document.querySelector('#query')
+  query.select()
+  document.execCommand('copy');
+})
 
 chrome.runtime.onMessage.addListener(handleRequest);

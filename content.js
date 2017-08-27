@@ -21,6 +21,7 @@
 
 // Extension namespace.
 var xh = xh || {};
+var cssSelector = '';
 
 ////////////////////////////////////////////////////////////
 // Generic helper functions and constants
@@ -56,6 +57,7 @@ xh.getElementIndex = function(el) {
 
 xh.makeQueryForElement = function(el) {
   var query = '';
+  cssSelector = '';
   for (; el && el.nodeType === Node.ELEMENT_NODE; el = el.parentNode) {
     var component = el.tagName.toLowerCase();
     var index = xh.getElementIndex(el);
@@ -72,7 +74,21 @@ xh.makeQueryForElement = function(el) {
       component += '/@src';
     }
     query = '/' + component + query;
+
+    // query css selector
+    var cssTemp = el.tagName.toLowerCase();
+    if (el.id) {
+      cssTemp += '#' + el.id ;
+    } else if (el.className) {
+      cssTemp += '.' + el.className.split(' ').join('.');
+    }
+    if (index >= 1) {
+      cssTemp += ':nth-child(' + index + ')';
+    }
+    cssSelector = cssTemp + ' > ' + cssSelector;
+    
   }
+  cssSelector = cssSelector.slice(0, -2);
   return query;
 };
 
@@ -181,6 +197,7 @@ xh.Bar.prototype.updateBar_ = function(updateQuery) {
   chrome.runtime.sendMessage({
     type: 'update',
     query: updateQuery ? this.query_ : null,
+    css: cssSelector,
     results: results
   });
 };
