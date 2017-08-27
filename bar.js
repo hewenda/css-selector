@@ -85,7 +85,7 @@ document.addEventListener('mousemove', handleMouseMove)
 // script to hide iframe and steal focus.
 document.addEventListener('keydown', handleKeyDown)
 
-document.addEventListener('click', function(){
+document.querySelector('#copy').addEventListener('click', function(e){
   var query = document.querySelector('#query')
   query.select()
   document.execCommand('copy')
